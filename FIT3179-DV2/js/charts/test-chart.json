@@ -1,0 +1,39 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Temporary test chart",
+  "width": "container",
+  "height": 250,
+  "data": {
+    "values": [
+      {"year": "2022", "value": 20},
+      {"year": "2023", "value": 30},
+      {"year": "2024", "value": 45},
+      {"year": "2025", "value": 55}
+    ]
+  },
+  "mark": {
+    "type": "bar",
+    "color": "#377b69"
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "Year"
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "title": "Illustrative value"
+    },
+    "tooltip": [
+      {"field": "year"},
+      {"field": "value"}
+    ]
+  },
+  "config": {
+    "background": "#f6f8f7",
+    "view": {"stroke": null}
+  }
+}
