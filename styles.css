@@ -127,3 +127,16 @@ footer p{font-size:11px;color:var(--muted)}
   }
 
 }
+
+
+/* Consistent chart and insight alignment */
+
+@media (min-width: 850px) {
+  .chart-row {
+    align-items: center;
+  }
+
+  .chart-row .insight-panel {
+    margin-top: 0;
+  }
+}
