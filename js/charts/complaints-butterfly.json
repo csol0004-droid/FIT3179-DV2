@@ -1,6 +1,213 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "2023-only layered ranged-dot plot: each selected complaint prevalence compared to no-complaints 34.1% reference. Multiple-response survey percentages are not additive.",
   "background": "white",
+  "width": "container",
+  "height": 410,
+  "data": {
+    "url": "data/jmir-complaints.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "percent": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "34.1 - datum.percent",
+      "as": "gap_pp"
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "values": [
+          {
+            "benchmark": 34.1
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "stroke": "#9AAEAB",
+        "strokeWidth": 1.4,
+        "strokeDash": [
+          4,
+          5
+        ]
+      },
+      "encoding": {
+        "x": {
+          "field": "benchmark",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              46
+            ]
+          },
+          "axis": {
+            "title": "2023 respondents selecting each answer (%)",
+            "values": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ]
+          }
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.complaint !== 'No complaints'"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "stroke": "#CBDDD9",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "x": {
+          "field": "percent",
+          "type": "quantitative"
+        },
+        "x2": {
+          "datum": 34.1
+        },
+        "y": {
+          "field": "complaint",
+          "type": "ordinal",
+          "sort": [
+            "No complaints",
+            "Short battery life",
+            "Technical issues",
+            "Wear and tear",
+            "Uncomfortable",
+            "Falls off",
+            "Does not fit",
+            "Does not match outfit"
+          ],
+          "axis": {
+            "title": null,
+            "labelLimit": 150,
+            "labelPadding": 7
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 145
+      },
+      "encoding": {
+        "x": {
+          "field": "percent",
+          "type": "quantitative"
+        },
+        "color": {
+          "condition": [
+            {
+              "test": "datum.complaint === 'No complaints'",
+              "value": "#007F77"
+            },
+            {
+              "test": "datum.complaint === 'Short battery life' || datum.complaint === 'Technical issues'",
+              "value": "#C76A45"
+            }
+          ],
+          "value": "#79B5AB"
+        },
+        "tooltip": [
+          {
+            "field": "complaint",
+            "type": "nominal",
+            "title": "Answer"
+          },
+          {
+            "field": "percent",
+            "type": "quantitative",
+            "title": "Respondents (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "gap_pp",
+            "type": "quantitative",
+            "title": "Gap from no complaints (pp)",
+            "format": ".1f"
+          }
+        ],
+        "y": {
+          "field": "complaint",
+          "type": "ordinal",
+          "sort": [
+            "No complaints",
+            "Short battery life",
+            "Technical issues",
+            "Wear and tear",
+            "Uncomfortable",
+            "Falls off",
+            "Does not fit",
+            "Does not match outfit"
+          ],
+          "axis": {
+            "title": null,
+            "labelLimit": 150,
+            "labelPadding": 7
+          }
+        }
+      }
+    },
+    {
+      
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -10,
+        "font": "DM Sans",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#254349"
+      },
+      "encoding": {
+        "x": {
+          "field": "percent",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "percent",
+          "type": "quantitative",
+          "format": ".1f"
+        },
+        "y": {
+          "field": "complaint",
+          "type": "ordinal",
+          "sort": [
+            "No complaints",
+            "Short battery life",
+            "Technical issues",
+            "Wear and tear",
+            "Uncomfortable",
+            "Falls off",
+            "Does not fit",
+            "Does not match outfit"
+          ],
+          "axis": {
+            "title": null,
+            "labelLimit": 150,
+            "labelPadding": 7
+          }
+        }
+      }
+    }
+  ],
   "config": {
     "font": "DM Sans",
     "view": {
@@ -17,89 +224,5 @@
       "labelFontSize": 12,
       "titleFontSize": 12
     }
-  },
-  "width": "container",
-  "height": 465,
-  "data": {
-    "url": "data/jmir-complaints.csv",
-    "format": {
-      "type": "csv",
-      "parse": {
-        "percent": "number",
-        "year": "number",
-        "position": "number"
-      }
-    }
-  },
-  "mark": {
-    "type": "bar",
-    "height": 13
-  },
-  "encoding": {
-    "y": {
-      "field": "complaint",
-      "type": "nominal",
-      "sort": [
-        "No complaints",
-        "Short battery life",
-        "Technical issues",
-        "Wear and tear",
-        "Uncomfortable",
-        "Falls off",
-        "Screen problems",
-        "Data upload problems"
-      ],
-      "axis": {
-        "title": null,
-        "labelLimit": 165
-      }
-    },
-    "x": {
-      "field": "position",
-      "type": "quantitative",
-      "scale": {
-        "domain": [
-          -40,
-          40
-        ]
-      },
-      "axis": {
-        "title": "2016                  Survey respondents (%)                   2023",
-        "labelExpr": "abs(datum.value)"
-      }
-    },
-    "color": {
-      "field": "year",
-      "type": "nominal",
-      "scale": {
-        "domain": [
-          2016,
-          2023
-        ],
-        "range": [
-          "#F18F75",
-          "#007F77"
-        ]
-      },
-      "legend": {
-        "title": "Survey"
-      }
-    },
-    "tooltip": [
-      {
-        "field": "complaint",
-        "type": "nominal"
-      },
-      {
-        "field": "year",
-        "type": "ordinal"
-      },
-      {
-        "field": "percent",
-        "type": "quantitative",
-        "format": ".1f",
-        "title": "Respondents (%)"
-      }
-    ]
   }
 }

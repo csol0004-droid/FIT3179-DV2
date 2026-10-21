@@ -1,17 +1,9 @@
-complaint,year,percent,position
-Short battery life,2016,20,-20
-Technical issues,2016,12.2,-12.2
-Wear and tear,2016,13.5,-13.5
-Uncomfortable,2016,8.4,-8.4
-Falls off,2016,7.2,-7.2
-Screen problems,2016,4.2,-4.2
-Data upload problems,2016,19,-19
-No complaints,2016,30,-30
-Short battery life,2023,21.4,21.4
-Technical issues,2023,19.1,19.1
-Wear and tear,2023,18.1,18.1
-Uncomfortable,2023,16.2,16.2
-Falls off,2023,15.7,15.7
-Screen problems,2023,12.2,12.2
-Data upload problems,2023,9.9,9.9
-No complaints,2023,34.1,34.1
+complaint,percent
+No complaints,34.1
+Short battery life,21.4
+Technical issues,19.1
+Wear and tear,18.1
+Uncomfortable,16.2
+Falls off,15.7
+Does not fit,14.9
+Does not match outfit,13.5

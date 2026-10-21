@@ -1,15 +1,8 @@
-feature,year,percent
-Heart rate,2016,63
-Heart rate,2023,70.5
-Steps,2016,94.5
-Steps,2023,65.9
-Active minutes,2016,75.5
-Active minutes,2023,65.2
-Sleep,2016,66
-Sleep,2023,59.9
-Energy burned,2016,56.5
-Energy burned,2023,58.6
-Energy consumed,2016,36
-Energy consumed,2023,49.6
-Stairs,2016,57.5
-Stairs,2023,48.9
+feature,percent
+Heart rate,70.5
+Steps,65.9
+Active minutes,65.2
+Sleep,59.9
+Energy burned,58.6
+Energy consumed,49.6
+Stairs,48.9

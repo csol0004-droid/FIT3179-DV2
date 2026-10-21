@@ -71,3 +71,59 @@ footer p{font-size:11px;color:var(--muted)}
 @media(max-width:560px){.insight-panel .insight-copy{font-size:14px}}
 
 
+
+
+/* FINAL ALIGNMENT FIXES */
+
+/* Maintain consistent spacing between charts */
+.chart-row {
+  align-items: flex-start;
+  margin-bottom: 60px;
+}
+
+/* Keep insight panels aligned near the plot area */
+@media (min-width: 850px) {
+  .chart-row .insight-panel {
+    margin-top: 47px;
+  }
+}
+
+/* Centre the entire Chart 11 Vega container */
+#vis11 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Allow the waffle chart to use its actual width */
+#vis11 .vega-embed {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Keep the rendered chart responsive */
+#vis11 .vega-embed svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Align charts and insights in Sections 3 and 4 only */
+
+@media (min-width: 850px) {
+
+  /* Centre each chart and insight vertically */
+  #australia .chart-row,
+  #people .chart-row {
+    align-items: center;
+  }
+
+  /* Remove the extra top offset */
+  #australia .chart-row .insight-panel,
+  #people .chart-row .insight-panel {
+    margin-top: 0;
+  }
+
+}
