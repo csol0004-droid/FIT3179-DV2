@@ -1,0 +1,123 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "white",
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#566C70",
+      "titleColor": "#254349",
+      "gridColor": "#E8EFEF",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "description": "Bivariate choropleth: smartwatch and smart wristband ownership percent, nine classes; paired explicit 3 by 3 legend supplied in HTML.",
+  "width": "container",
+  "height": 330,
+  "projection": {
+    "type": "equalEarth"
+  },
+  "data": {
+    "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+    "format": {
+      "type": "topojson",
+      "feature": "countries"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum.id)",
+      "as": "iso_numeric"
+    },
+    {
+      "lookup": "iso_numeric",
+      "from": {
+        "data": {
+          "url": "data/gwi-country-ownership.csv",
+          "format": {
+            "type": "csv",
+            "parse": {
+              "iso_numeric": "number",
+              "smartwatch": "number",
+              "wristband": "number"
+            }
+          }
+        },
+        "key": "iso_numeric",
+        "fields": [
+          "country",
+          "smartwatch",
+          "wristband"
+        ]
+      }
+    },
+    {
+      "calculate": "isValid(datum.smartwatch) && isValid(datum.wristband) ? (datum.smartwatch >= 31 ? 'High' : datum.smartwatch >= 23 ? 'Mid' : 'Low') + ' watch / ' + (datum.wristband >= 14 ? 'High' : datum.wristband >= 9 ? 'Mid' : 'Low') + ' band' : 'No data'",
+      "as": "class"
+    }
+  ],
+  "mark": {
+    "type": "geoshape",
+    "stroke": "#FFFFFF",
+    "strokeWidth": 0.45
+  },
+  "encoding": {
+    "color": {
+      "field": "class",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Low watch / Low band",
+          "Low watch / Mid band",
+          "Low watch / High band",
+          "Mid watch / Low band",
+          "Mid watch / Mid band",
+          "Mid watch / High band",
+          "High watch / Low band",
+          "High watch / Mid band",
+          "High watch / High band",
+          "No data"
+        ],
+        "range": [
+          "#e7efef",
+          "#cee5e1",
+          "#95d0c5",
+          "#e0dae8",
+          "#a7c5c8",
+          "#65a89f",
+          "#c3bbda",
+          "#8ba9bb",
+          "#476d86",
+          "#ECEFEE"
+        ]
+      },
+      "legend": null
+    },
+    "tooltip": [
+      {
+        "field": "country",
+        "type": "nominal",
+        "title": "Market"
+      },
+      {
+        "field": "smartwatch",
+        "type": "quantitative",
+        "title": "Smartwatch (%)",
+        "format": ".1f"
+      },
+      {
+        "field": "wristband",
+        "type": "quantitative",
+        "title": "Wristband (%)",
+        "format": ".1f"
+      }
+    ]
+  }
+}

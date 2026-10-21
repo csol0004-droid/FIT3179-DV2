@@ -1,0 +1,111 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "white",
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#566C70",
+      "titleColor": "#254349",
+      "gridColor": "#E8EFEF",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "width": "container",
+  "height": 430,
+  "data": {
+    "url": "data/jmir-feature-ranks.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "percent": "number",
+        "year": "number",
+        "rank": "number"
+      }
+    }
+  },
+  "mark": {
+    "type": "line",
+    "point": {
+      "filled": true,
+      "size": 105
+    },
+    "strokeWidth": 3
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "sort": [
+        2016,
+        2023
+      ],
+      "title": "Survey year",
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "rank",
+      "type": "quantitative",
+      "title": "Usefulness ranking (1 = highest)",
+      "scale": {
+        "domain": [
+          1,
+          7
+        ],
+        "reverse": true
+      },
+      "axis": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "color": {
+      "field": "feature",
+      "type": "nominal",
+      "scale": {
+        "scheme": "tableau10"
+      },
+      "legend": {
+        "orient": "bottom",
+        "title": null,
+        "columns": 2
+      }
+    },
+    "tooltip": [
+      {
+        "field": "feature",
+        "type": "nominal"
+      },
+      {
+        "field": "year",
+        "type": "ordinal"
+      },
+      {
+        "field": "rank",
+        "type": "quantitative"
+      },
+      {
+        "field": "percent",
+        "type": "quantitative",
+        "title": "Rated useful (%)",
+        "format": ".1f"
+      }
+    ]
+  }
+}

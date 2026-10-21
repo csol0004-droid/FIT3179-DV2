@@ -1,0 +1,175 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "white",
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#566C70",
+      "titleColor": "#254349",
+      "gridColor": "#E8EFEF",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "width": "container",
+  "height": 330,
+  "data": {
+    "url": "data/acma-older-age.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "percent": "number"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3.2,
+        "point": {
+          "filled": true,
+          "size": 110
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "sort": [
+            2023,
+            2024
+          ],
+          "axis": {
+            "title": "Survey year",
+            "labelAngle": 0,
+            "labelFontSize": 12
+          }
+        },
+        "y": {
+          "field": "percent",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              45
+            ]
+          },
+          "axis": {
+            "title": "Ownership of connected wearables (%)",
+            "grid": true
+          }
+        },
+        "color": {
+          "field": "age_group",
+          "type": "nominal",
+          "title": "Age group",
+          "scale": {
+            "domain": [
+              "55–64",
+              "65–74",
+              "75+"
+            ],
+            "range": [
+              "#007D78",
+              "#296AA0",
+              "#D37C4F"
+            ]
+          },
+          "legend": {
+            "orient": "bottom"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "age_group",
+            "type": "nominal",
+            "title": "Age"
+          },
+          {
+            "field": "year",
+            "type": "ordinal",
+            "title": "Year"
+          },
+          {
+            "field": "percent",
+            "type": "quantitative",
+            "title": "Ownership (%)",
+            "format": ".0f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -13,
+        "fontSize": 12,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "sort": [
+            2023,
+            2024
+          ],
+          "axis": {
+            "title": "Survey year",
+            "labelAngle": 0,
+            "labelFontSize": 12
+          }
+        },
+        "y": {
+          "field": "percent",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              45
+            ]
+          },
+          "axis": {
+            "title": "Ownership of connected wearables (%)",
+            "grid": true
+          }
+        },
+        "text": {
+          "field": "percent",
+          "type": "quantitative",
+          "format": ".0f"
+        },
+        "color": {
+          "field": "age_group",
+          "type": "nominal",
+          "title": "Age group",
+          "scale": {
+            "domain": [
+              "55–64",
+              "65–74",
+              "75+"
+            ],
+            "range": [
+              "#007D78",
+              "#296AA0",
+              "#D37C4F"
+            ]
+          },
+          "legend": {
+            "orient": "bottom"
+          }
+        }
+      }
+    }
+  ],
+  "description": "Age group slopegraph: ACMA 2023 vs 2024 connected-wearable ownership for older Australians."
+}

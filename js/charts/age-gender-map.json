@@ -1,0 +1,164 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "white",
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#566C70",
+      "titleColor": "#254349",
+      "gridColor": "#E8EFEF",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "width": "container",
+  "height": 280,
+  "data": {
+    "url": "data/gwi-age-gender.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "percent": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "format(datum.percent, '.1f') + '%'",
+      "as": "value_label"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#FFFFFF",
+        "strokeWidth": 3,
+        "cornerRadius": 1
+      },
+      "encoding": {
+        "x": {
+          "field": "age",
+          "type": "ordinal",
+          "sort": [
+            "16–24",
+            "25–34",
+            "35–44",
+            "45–54",
+            "55–64",
+            "65+"
+          ],
+          "axis": {
+            "title": "Age group",
+            "labelAngle": 0
+          }
+        },
+        "y": {
+          "field": "gender",
+          "type": "nominal",
+          "axis": {
+            "title": null
+          }
+        },
+        "color": {
+          "field": "percent",
+          "type": "quantitative",
+          "title": "Smartwatch owners (%)",
+          "scale": {
+            "domain": [
+              15,
+              35
+            ],
+            "range": [
+              "#E5F4F5",
+              "#8AC3D1",
+              "#378AA9",
+              "#0D4E7D",
+              "#112F5C"
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "age",
+            "type": "nominal"
+          },
+          {
+            "field": "gender",
+            "type": "nominal"
+          },
+          {
+            "field": "percent",
+            "type": "quantitative",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {
+          "field": "age",
+          "type": "ordinal",
+          "sort": [
+            "16–24",
+            "25–34",
+            "35–44",
+            "45–54",
+            "55–64",
+            "65+"
+          ],
+          "axis": {
+            "title": "Age group",
+            "labelAngle": 0
+          }
+        },
+        "y": {
+          "field": "gender",
+          "type": "nominal",
+          "axis": {
+            "title": null
+          }
+        },
+        "text": {
+          "field": "value_label",
+          "type": "nominal"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.percent >= 26",
+            "value": "white"
+          },
+          "value": "#183941"
+        },
+        "tooltip": [
+          {
+            "field": "age",
+            "type": "nominal"
+          },
+          {
+            "field": "gender",
+            "type": "nominal"
+          },
+          {
+            "field": "percent",
+            "type": "quantitative",
+            "format": ".1f"
+          }
+        ]
+      }
+    }
+  ]
+}

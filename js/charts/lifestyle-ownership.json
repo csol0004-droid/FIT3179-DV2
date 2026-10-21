@@ -1,0 +1,314 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "white",
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#566C70",
+      "titleColor": "#254349",
+      "gridColor": "#E8EFEF",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "width": "container",
+  "height": 310,
+  "data": {
+    "values": [
+      {
+        "comparison": "Age: 18–25 vs 77+",
+        "low": 39,
+        "high": 71,
+        "lower": "77+",
+        "higher": "18–25"
+      },
+      {
+        "comparison": "Education: graduate vs high school",
+        "low": 41,
+        "high": 62,
+        "lower": "High school",
+        "higher": "Graduate"
+      },
+      {
+        "comparison": "Work: full-time vs retired",
+        "low": 52,
+        "high": 64,
+        "lower": "Retired",
+        "higher": "Full-time"
+      }
+    ]
+  },
+  "transform": [
+    {
+      "calculate": "(datum.low + datum.high)/2",
+      "as": "mid"
+    },
+    {
+      "calculate": "'+' + (datum.high - datum.low) + ' pp'",
+      "as": "gap"
+    },
+    {
+      "calculate": "datum.low + '%'",
+      "as": "lowlabel"
+    },
+    {
+      "calculate": "datum.high + '%'",
+      "as": "highlabel"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#B0D2CF",
+        "strokeWidth": 7
+      },
+      "encoding": {
+        "x": {
+          "field": "low",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              28,
+              83
+            ]
+          },
+          "axis": {
+            "title": "Reported ownership (%)",
+            "grid": true
+          }
+        },
+        "x2": {
+          "field": "high"
+        },
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Age: 18–25 vs 77+",
+            "Education: graduate vs high school",
+            "Work: full-time vs retired"
+          ],
+          "axis": {
+            "title": null,
+            "labelLimit": 195,
+            "labelFontSize": 10.5
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 145,
+        "color": "#89A8B0"
+      },
+      "encoding": {
+        "x": {
+          "field": "low",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              28,
+              83
+            ]
+          },
+          "axis": {
+            "title": "Reported ownership (%)",
+            "grid": true
+          }
+        },
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Age: 18–25 vs 77+",
+            "Education: graduate vs high school",
+            "Work: full-time vs retired"
+          ],
+          "axis": {
+            "title": null,
+            "labelLimit": 195,
+            "labelFontSize": 10.5
+          }
+        },
+        "tooltip": [
+          {
+            "field": "comparison",
+            "type": "nominal"
+          },
+          {
+            "field": "lower",
+            "type": "nominal"
+          },
+          {
+            "field": "low",
+            "type": "quantitative"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 145,
+        "color": "#087E74"
+      },
+      "encoding": {
+        "x": {
+          "field": "high",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              28,
+              83
+            ]
+          }
+        },
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Age: 18–25 vs 77+",
+            "Education: graduate vs high school",
+            "Work: full-time vs retired"
+          ],
+          "axis": {
+            "title": null,
+            "labelLimit": 195,
+            "labelFontSize": 10.5
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dx": -10,
+        "dy": 20,
+        "align": "right",
+        "fontSize": 11,
+        "color": "#4E6F77"
+      },
+      "encoding": {
+        "x": {
+          "field": "low",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              28,
+              83
+            ]
+          },
+          "axis": {
+            "title": "Reported ownership (%)",
+            "grid": true
+          }
+        },
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Age: 18–25 vs 77+",
+            "Education: graduate vs high school",
+            "Work: full-time vs retired"
+          ],
+          "axis": {
+            "title": null,
+            "labelLimit": 195,
+            "labelFontSize": 10.5
+          }
+        },
+        "text": {
+          "field": "lowlabel"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dx": 10,
+        "dy": 20,
+        "align": "left",
+        "fontSize": 11,
+        "color": "#056C65"
+      },
+      "encoding": {
+        "x": {
+          "field": "high",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              28,
+              83
+            ]
+          }
+        },
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Age: 18–25 vs 77+",
+            "Education: graduate vs high school",
+            "Work: full-time vs retired"
+          ],
+          "axis": {
+            "title": null,
+            "labelLimit": 195,
+            "labelFontSize": 10.5
+          }
+        },
+        "text": {
+          "field": "highlabel"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -19,
+        "fontWeight": "bold",
+        "fontSize": 12,
+        "color": "#23393E"
+      },
+      "encoding": {
+        "x": {
+          "field": "mid",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              28,
+              83
+            ]
+          }
+        },
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Age: 18–25 vs 77+",
+            "Education: graduate vs high school",
+            "Work: full-time vs retired"
+          ],
+          "axis": {
+            "title": null,
+            "labelLimit": 195,
+            "labelFontSize": 10.5
+          }
+        },
+        "text": {
+          "field": "gap"
+        }
+      }
+    }
+  ]
+}

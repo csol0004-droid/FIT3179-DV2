@@ -1,0 +1,105 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "white",
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#566C70",
+      "titleColor": "#254349",
+      "gridColor": "#E8EFEF",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "width": "container",
+  "height": 465,
+  "data": {
+    "url": "data/jmir-complaints.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "percent": "number",
+        "year": "number",
+        "position": "number"
+      }
+    }
+  },
+  "mark": {
+    "type": "bar",
+    "height": 13
+  },
+  "encoding": {
+    "y": {
+      "field": "complaint",
+      "type": "nominal",
+      "sort": [
+        "No complaints",
+        "Short battery life",
+        "Technical issues",
+        "Wear and tear",
+        "Uncomfortable",
+        "Falls off",
+        "Screen problems",
+        "Data upload problems"
+      ],
+      "axis": {
+        "title": null,
+        "labelLimit": 165
+      }
+    },
+    "x": {
+      "field": "position",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          -40,
+          40
+        ]
+      },
+      "axis": {
+        "title": "2016                  Survey respondents (%)                   2023",
+        "labelExpr": "abs(datum.value)"
+      }
+    },
+    "color": {
+      "field": "year",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          2016,
+          2023
+        ],
+        "range": [
+          "#F18F75",
+          "#007F77"
+        ]
+      },
+      "legend": {
+        "title": "Survey"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "complaint",
+        "type": "nominal"
+      },
+      {
+        "field": "year",
+        "type": "ordinal"
+      },
+      {
+        "field": "percent",
+        "type": "quantitative",
+        "format": ".1f",
+        "title": "Respondents (%)"
+      }
+    ]
+  }
+}

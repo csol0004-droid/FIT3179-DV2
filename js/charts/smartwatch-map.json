@@ -1,0 +1,126 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "white",
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#566C70",
+      "titleColor": "#254349",
+      "gridColor": "#E8EFEF",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "description": "GWI Q2 2025 surveyed internet users aged 16+: five-step high-luminance-contrast choropleth; no-data countries grey.",
+  "width": "container",
+  "height": 350,
+  "data": {
+    "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+    "format": {
+      "type": "topojson",
+      "feature": "countries"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum.id)",
+      "as": "iso_numeric"
+    },
+    {
+      "lookup": "iso_numeric",
+      "from": {
+        "data": {
+          "url": "data/gwi-country-ownership.csv",
+          "format": {
+            "type": "csv",
+            "parse": {
+              "iso_numeric": "number",
+              "smartwatch": "number",
+              "wristband": "number"
+            }
+          }
+        },
+        "key": "iso_numeric",
+        "fields": [
+          "country",
+          "smartwatch",
+          "wristband"
+        ]
+      }
+    }
+  ],
+  "projection": {
+    "type": "equalEarth"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "geoshape",
+        "fill": "#E7EBED",
+        "stroke": "#FFFFFF",
+        "strokeWidth": 0.45
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "isValid(datum.smartwatch)"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#FFFFFF",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "color": {
+          "field": "smartwatch",
+          "type": "quantitative",
+          "title": "Ownership (%)",
+          "scale": {
+            "type": "threshold",
+            "domain": [
+              18,
+              24,
+              30,
+              35
+            ],
+            "range": [
+              "#E5F3F0",
+              "#AFD9CF",
+              "#73B5A7",
+              "#2C8E83",
+              "#064F55"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "title": "Smartwatch ownership (%), GWI 2025",
+            "symbolType": "square",
+            "symbolSize": 150
+          }
+        },
+        "tooltip": [
+          {
+            "field": "country",
+            "type": "nominal",
+            "title": "Country"
+          },
+          {
+            "field": "smartwatch",
+            "type": "quantitative",
+            "title": "Smartwatch ownership (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    }
+  ]
+}

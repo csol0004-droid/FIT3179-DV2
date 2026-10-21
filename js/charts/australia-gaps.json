@@ -1,0 +1,279 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "white",
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#566C70",
+      "titleColor": "#254349",
+      "gridColor": "#E8EFEF",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "width": "container",
+  "height": 255,
+  "data": {
+    "values": [
+      {
+        "comparison": "Gender",
+        "lower": "Men",
+        "low": 34,
+        "higher": "Women",
+        "high": 40
+      },
+      {
+        "comparison": "Location",
+        "lower": "Regional",
+        "low": 34,
+        "higher": "Metropolitan",
+        "high": 39
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 6,
+        "color": "#BED2D0"
+      },
+      "encoding": {
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Gender",
+            "Location"
+          ],
+          "axis": {
+            "title": null,
+            "labelFontSize": 12
+          }
+        },
+        "x": {
+          "field": "low",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              25,
+              45
+            ]
+          },
+          "axis": {
+            "title": "Connected wearable ownership (%)",
+            "grid": true
+          }
+        },
+        "x2": {
+          "field": "high"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 150,
+        "color": "#DC806A"
+      },
+      "encoding": {
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Gender",
+            "Location"
+          ],
+          "axis": {
+            "title": null,
+            "labelFontSize": 12
+          }
+        },
+        "x": {
+          "field": "low",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              25,
+              45
+            ]
+          },
+          "axis": {
+            "title": "Connected wearable ownership (%)",
+            "grid": true
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 150,
+        "color": "#087E74"
+      },
+      "encoding": {
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Gender",
+            "Location"
+          ],
+          "axis": {
+            "title": null,
+            "labelFontSize": 12
+          }
+        },
+        "x": {
+          "field": "high",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              25,
+              45
+            ]
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -9,
+        "dy": 19,
+        "color": "#9E4E3B",
+        "fontSize": 11
+      },
+      "encoding": {
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Gender",
+            "Location"
+          ],
+          "axis": {
+            "title": null,
+            "labelFontSize": 12
+          }
+        },
+        "x": {
+          "field": "low",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              25,
+              45
+            ]
+          },
+          "axis": {
+            "title": "Connected wearable ownership (%)",
+            "grid": true
+          }
+        },
+        "text": {
+          "field": "low_label",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 9,
+        "dy": 19,
+        "color": "#00665F",
+        "fontSize": 11
+      },
+      "encoding": {
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Gender",
+            "Location"
+          ],
+          "axis": {
+            "title": null,
+            "labelFontSize": 12
+          }
+        },
+        "x": {
+          "field": "high",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              25,
+              45
+            ]
+          }
+        },
+        "text": {
+          "field": "high_label",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "dy": -17,
+        "color": "#19333A",
+        "fontWeight": "bold",
+        "fontSize": 13
+      },
+      "encoding": {
+        "y": {
+          "field": "comparison",
+          "type": "nominal",
+          "sort": [
+            "Gender",
+            "Location"
+          ],
+          "axis": {
+            "title": null,
+            "labelFontSize": 12
+          }
+        },
+        "x": {
+          "field": "mid",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "gap_label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "transform": [
+    {
+      "calculate": "datum.higher + ' ' + datum.high + '%'",
+      "as": "high_label"
+    },
+    {
+      "calculate": "datum.lower + ' ' + datum.low + '%'",
+      "as": "low_label"
+    },
+    {
+      "calculate": "'+' + (datum.high - datum.low) + ' pp'",
+      "as": "gap_label"
+    },
+    {
+      "calculate": "(datum.low + datum.high) / 2",
+      "as": "mid"
+    }
+  ]
+}

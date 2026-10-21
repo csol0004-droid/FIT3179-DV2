@@ -1,0 +1,111 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "white",
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#566C70",
+      "titleColor": "#254349",
+      "gridColor": "#E8EFEF",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "description": "Proportional symbol map of nine selected GWI Q2 2025 countries; reduced circle radius to mitigate overlaps.",
+  "width": "container",
+  "height": 340,
+  "projection": {
+    "type": "equalEarth"
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+        "format": {
+          "type": "topojson",
+          "feature": "countries"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#EDF4F3",
+        "stroke": "#BED4D2",
+        "strokeWidth": 0.35
+      }
+    },
+    {
+      "data": {
+        "url": "data/wristband-selected.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "latitude": "number",
+            "longitude": "number",
+            "wristband": "number"
+          }
+        }
+      },
+      "mark": {
+        "type": "circle",
+        "color": "#DA725C",
+        "stroke": "#FFFFFF",
+        "strokeWidth": 1.0,
+        "fillOpacity": 0.69
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "wristband",
+          "type": "quantitative",
+          "title": "Wristband ownership (%)",
+          "scale": {
+            "domain": [
+              0,
+              26
+            ],
+            "range": [
+              0,
+              490
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "title": "Selected countries · wristband owners (%)",
+            "values": [
+              5,
+              15,
+              25
+            ],
+            "symbolFillColor": "#DA725C"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "country",
+            "type": "nominal"
+          },
+          {
+            "field": "wristband",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "Wristband ownership (%)"
+          }
+        ]
+      }
+    }
+  ]
+}

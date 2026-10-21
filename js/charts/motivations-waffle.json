@@ -1,0 +1,100 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "white",
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#566C70",
+      "titleColor": "#254349",
+      "gridColor": "#E8EFEF",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "description": "2023 respondents could select more than one motivation. Waffle cells rounded to nearest percent.",
+  "data": {
+    "url": "data/jmir-waffle.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "col": "number",
+        "row": "number",
+        "percent": "number"
+      }
+    }
+  },
+  "facet": {
+    "row": {
+      "field": "motivation",
+      "type": "nominal",
+      "sort": [
+        "Improve health",
+        "Monitor activities",
+        "Improve fitness",
+        "Improve appearance",
+        "Share activity"
+      ],
+      "header": {
+        "title": null,
+        "labelOrient": "top",
+        "labelFontSize": 13
+      }
+    }
+  },
+  "spec": {
+    "width": 480,
+    "height": 48,
+    "mark": {
+      "type": "rect",
+      "cornerRadius": 1,
+      "stroke": "white",
+      "strokeWidth": 0.8
+    },
+    "encoding": {
+      "x": {
+        "field": "col",
+        "type": "ordinal",
+        "axis": null
+      },
+      "y": {
+        "field": "row",
+        "type": "ordinal",
+        "axis": null
+      },
+      "color": {
+        "field": "response",
+        "type": "nominal",
+        "scale": {
+          "domain": [
+            "Reported",
+            "Not reported"
+          ],
+          "range": [
+            "#007F77",
+            "#DDE9E7"
+          ]
+        },
+        "legend": null
+      },
+      "tooltip": [
+        {
+          "field": "motivation",
+          "type": "nominal"
+        },
+        {
+          "field": "percent",
+          "type": "quantitative",
+          "title": "Reported motivation (%)",
+          "format": ".1f"
+        }
+      ]
+    }
+  }
+}

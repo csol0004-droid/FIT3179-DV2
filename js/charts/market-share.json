@@ -1,0 +1,232 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "description": "Worldwide wearable market share, Q1 2026",
+  "width": 650,
+  "height": 380,
+  "padding": 0,
+  "autosize": "none",
+  "background": "white",
+  "data": [
+    {
+      "name": "tree",
+      "values": [
+        {
+          "id": "Market",
+          "parent": null,
+          "share": 0
+        },
+        {
+          "id": "Others",
+          "parent": "Market",
+          "share": 48.0
+        },
+        {
+          "id": "Apple",
+          "parent": "Market",
+          "share": 18.1
+        },
+        {
+          "id": "Xiaomi",
+          "parent": "Market",
+          "share": 11.4
+        },
+        {
+          "id": "Huawei",
+          "parent": "Market",
+          "share": 10.6
+        },
+        {
+          "id": "Samsung",
+          "parent": "Market",
+          "share": 6.9
+        },
+        {
+          "id": "Imagine Marketing",
+          "parent": "Market",
+          "share": 5.0
+        }
+      ],
+      "transform": [
+        {
+          "type": "stratify",
+          "key": "id",
+          "parentKey": "parent"
+        },
+        {
+          "type": "treemap",
+          "field": "share",
+          "method": "squarify",
+          "paddingInner": 4,
+          "round": true,
+          "size": [
+            {
+              "signal": "width"
+            },
+            {
+              "signal": "height"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "!datum.children"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "brandColor",
+      "type": "ordinal",
+      "domain": [
+        "Others",
+        "Apple",
+        "Xiaomi",
+        "Huawei",
+        "Samsung",
+        "Imagine Marketing"
+      ],
+      "range": [
+        "#D5DCE0",
+        "#2463A6",
+        "#C76A20",
+        "#138477",
+        "#9155A7",
+        "#B84C59"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "enter": {
+          "fill": {
+            "scale": "brandColor",
+            "field": "id"
+          },
+          "tooltip": {
+            "signal": "datum.id + ': ' + format(datum.share, '.1f') + '%'"
+          }
+        },
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "field": "y1"
+          },
+          "fillOpacity": {
+            "value": 1
+          }
+        },
+        "hover": {
+          "fillOpacity": {
+            "value": 0.75
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "leaves"
+      },
+      "interactive": false,
+      "encode": {
+        "enter": {
+          "font": {
+            "value": "Manrope"
+          },
+          "fontSize": {
+            "value": 14
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          }
+        },
+        "update": {
+          "x": {
+            "signal": "(datum.x0 + datum.x1) / 2"
+          },
+          "y": {
+            "signal": "(datum.y0 + datum.y1) / 2 - 12"
+          },
+          "text": {
+            "signal": "datum.id === 'Imagine Marketing' ? 'Imagine Mktg.' : datum.id"
+          },
+          "limit": {
+            "signal": "max(20, datum.x1 - datum.x0 - 10)"
+          },
+          "fill": {
+            "signal": "datum.id === 'Others' ? '#243330' : 'white'"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "leaves"
+      },
+      "interactive": false,
+      "encode": {
+        "enter": {
+          "font": {
+            "value": "Manrope"
+          },
+          "fontSize": {
+            "value": 17
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          }
+        },
+        "update": {
+          "x": {
+            "signal": "(datum.x0 + datum.x1) / 2"
+          },
+          "y": {
+            "signal": "(datum.y0 + datum.y1) / 2 + 13"
+          },
+          "text": {
+            "signal": "format(datum.share, '.1f') + '%'"
+          },
+          "fill": {
+            "signal": "datum.id === 'Others' ? '#243330' : 'white'"
+          }
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "DM Sans"
+  }
+}

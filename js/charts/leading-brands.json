@@ -1,0 +1,230 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Top 5 wearable device companies by worldwide shipment share, 2025Q1 to 2026Q1.",
+  "width": "container",
+  "height": 410,
+  "background": "white",
+  "data": {
+    "url": "data/wearable-brands.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "market_share": "number"
+      }
+    }
+  },
+  "encoding": {
+    "x": {
+      "field": "quarter",
+      "type": "ordinal",
+      "sort": [
+        "2025Q1",
+        "2025Q2",
+        "2025Q3",
+        "2025Q4",
+        "2026Q1"
+      ],
+      "axis": {
+        "title": "Quarter",
+        "labelAngle": 0,
+        "labelPadding": 8,
+        "grid": false
+      }
+    },
+    "y": {
+      "field": "market_share",
+      "type": "quantitative",
+      "scale": {
+        "zero": true
+      },
+      "axis": {
+        "title": "Worldwide shipment share (%)",
+        "grid": true,
+        "gridColor": "#E5ECE8",
+        "titlePadding": 12
+      }
+    }
+  },
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "selectedBrand",
+          "select": {
+            "type": "point",
+            "fields": [
+              "brand"
+            ]
+          },
+          "bind": "legend"
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.8,
+        "point": {
+          "filled": true,
+          "size": 55
+        }
+      },
+      "encoding": {
+        "color": {
+          "field": "brand",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Apple",
+              "Xiaomi",
+              "Huawei",
+              "Samsung",
+              "Imagine Marketing"
+            ],
+            "range": [
+              "#2463A6",
+              "#C76A20",
+              "#138477",
+              "#9155A7",
+              "#B84C59"
+            ]
+          },
+          "legend": {
+            "title": "Click a company to highlight",
+            "orient": "bottom",
+            "columns": 2,
+            "labelLimit": 180
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "selectedBrand",
+            "value": 1
+          },
+          "value": 0.2
+        },
+        "tooltip": [
+          {
+            "field": "brand",
+            "type": "nominal",
+            "title": "Company"
+          },
+          {
+            "field": "quarter",
+            "type": "ordinal",
+            "title": "Quarter"
+          },
+          {
+            "field": "market_share",
+            "type": "quantitative",
+            "title": "Market share (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "window": [
+            {
+              "op": "rank",
+              "as": "rank"
+            }
+          ],
+          "sort": [
+            {
+              "field": "market_share",
+              "order": "descending"
+            }
+          ]
+        },
+        {
+          "filter": "datum.rank == 1"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 190,
+        "color": "#111827",
+        "stroke": "white",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "brand",
+            "type": "nominal",
+            "title": "Peak company"
+          },
+          {
+            "field": "quarter",
+            "type": "ordinal",
+            "title": "Quarter"
+          },
+          {
+            "field": "market_share",
+            "type": "quantitative",
+            "title": "Peak share (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "window": [
+            {
+              "op": "rank",
+              "as": "rank"
+            }
+          ],
+          "sort": [
+            {
+              "field": "market_share",
+              "order": "descending"
+            }
+          ]
+        },
+        {
+          "filter": "datum.rank == 1"
+        },
+        {
+          "calculate": "datum.brand + ' peak: ' + format(datum.market_share, '.1f') + '%'",
+          "as": "peak_label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "dy": -12,
+        "font": "DM Sans",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#111827"
+      },
+      "encoding": {
+        "text": {
+          "field": "peak_label"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "DM Sans",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#344640",
+      "titleColor": "#243331",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 11
+    }
+  }
+}
